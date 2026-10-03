@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  /* الألوان بأسماء معنوية - مش أسماء ألوان */
+  --color-forest: #193634;
+  --color-forest-deep: #0c3934;
+  --color-sand: #d2bc93;
+  --color-sand-dark: #c0a878;
+  --color-cream: #f5f2eb;
+  --color-paper: #fbfaf7;
+  --color-stone: #adb0a7;
+
+  /* الخط - منركّبه أول ما تجيب ملفات نقي */
+  --font-sans: "Nuqi", "Segoe UI", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    @apply bg-paper;
+    /* ارتفاع الناف الثابت (h-20) حتى ما يغطي عناوين الأقسام عند التنقل بالروابط */
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-paper font-sans text-forest antialiased;
+  }
+}
+
+/* حركة فتح وإغلاق الأسئلة الشائعة.
+   interpolate-size بيخلي المتصفح يحرّك الارتفاع من 0 إلى auto.
+   المتصفحات القديمة بتتجاهل القاعدة وبتفتح السؤال فوراً بدون حركة. */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  .accordion::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 350ms ease,
+      content-visibility 350ms allow-discrete;
+  }
+
+  .accordion[open]::details-content {
+    height: auto;
+  }
+}
